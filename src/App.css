@@ -1,0 +1,122 @@
+/* Volume Container */
+.volume-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  /* Volume Icon */
+  .volume-icon {
+    width: 24px;
+    height: 24px;
+    background: #ff5722; /* Example icon color */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  
+  /* Volume Slider Input */
+  .volume-container input[type="range"] {
+    width: 100px;
+    height: 5px;
+    background: linear-gradient(to right, #ff5722 var(--filled-track-width), rgba(255, 255, 255, 0.3) var(--filled-track-width));
+    border-radius: 5px;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  @keyframes expand {
+    0% {
+      width: 0;
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    100% {
+      width: 100px;
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+  .volume-container:hover input[type="range"] {
+    animation: expand 0.3s ease-in-out forwards;
+  }  
+  
+  /* Show Volume Slider on Hover with Animation */
+  .volume-container:hover input[type="range"] {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  
+  /* Volume Slider Thumb */
+  .volume-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #ff5722;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  /* Thumb Hover Effect */
+  .volume-container input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.2);
+  }
+  
+  /* Track Background */
+  .volume-container input[type="range"]::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    height: 5px;
+    position: relative;
+  }
+  
+  /* Filled Track Background */
+  .volume-container input[type="range"]::-webkit-slider-runnable-track::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 5px;
+    background: #ff5722;
+    border-radius: 5px;
+    z-index: -1;
+    width: var(--filled-track-width);
+    transition: width 0.3s ease-in-out;
+  }
+  
+  /* Firefox Support */
+  .volume-container input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #ff5722;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .volume-container input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.2);
+  }
+  
+  .volume-container input[type="range"]::-moz-range-track {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    height: 5px;
+  }
+  
+  /* Firefox Filled Track Background */
+  .volume-container input[type="range"]::-moz-range-progress {
+    background: #ff5722;
+    height: 5px;
+    border-radius: 5px;
+  }
