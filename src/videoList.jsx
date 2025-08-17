@@ -6,10 +6,19 @@ const VideoList = ({ onVideoSelect }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Dynamic API base URL
+  const getApiBaseUrl = () => {
+    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:3000'
+      : 'https://course-backend-cnwc.onrender.com';
+  };
+
+  const API_BASE_URL = getApiBaseUrl();
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/videos");
+        const response = await fetch(`${API_BASE_URL}/api/videos`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -32,14 +41,14 @@ const VideoList = ({ onVideoSelect }) => {
     };
 
     fetchVideos();
-  }, []);
+  }, [API_BASE_URL]);
 
   const handleVideoUpload = async (event) => {
     const formData = new FormData();
     formData.append("video", event.target.files[0]);
     
     try {
-      const response = await fetch("http://localhost:3000/api/videos/upload", {
+      const response = await fetch(`${API_BASE_URL}/api/videos/upload`, {
         method: "POST",
         body: formData,
       });
@@ -73,7 +82,12 @@ const VideoList = ({ onVideoSelect }) => {
     <div className="video-list-container">
       <h2 className="video-list-title">Available Videos</h2>
       
-      <input type="file" accept="video/*" onChange={handleVideoUpload} />
+      <input 
+        type="file" 
+        accept="video/*" 
+        onChange={handleVideoUpload} 
+        className="upload-input"
+      />
       
       {videos.length === 0 ? (
         <div className="no-videos">No videos found</div>
@@ -88,6 +102,13 @@ const VideoList = ({ onVideoSelect }) => {
               <div className="video-title">{video.title}</div>
               {video.description && (
                 <div className="video-description">{video.description}</div>
+              )}
+              {video.url && (
+                <div className="video-preview">
+                  <video width="150" controls>
+                    <source src={`${API_BASE_URL}${video.url}`} type="video/mp4" />
+                  </video>
+                </div>
               )}
             </li>
           ))}
