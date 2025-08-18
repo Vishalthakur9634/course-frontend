@@ -6,10 +6,13 @@ const VideoList = ({ onVideoSelect }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Get API base URL from environment variables
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/videos");
+        const response = await fetch(`${API_BASE_URL}/api/videos`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -32,14 +35,14 @@ const VideoList = ({ onVideoSelect }) => {
     };
 
     fetchVideos();
-  }, []);
+  }, [API_BASE_URL]); // Add API_BASE_URL as dependency
 
   const handleVideoUpload = async (event) => {
     const formData = new FormData();
     formData.append("video", event.target.files[0]);
     
     try {
-      const response = await fetch("http://localhost:3000/api/videos/upload", {
+      const response = await fetch(`${API_BASE_URL}/api/videos/upload`, {
         method: "POST",
         body: formData,
       });
@@ -73,7 +76,12 @@ const VideoList = ({ onVideoSelect }) => {
     <div className="video-list-container">
       <h2 className="video-list-title">Available Videos</h2>
       
-      <input type="file" accept="video/*" onChange={handleVideoUpload} />
+      <input 
+        type="file" 
+        accept="video/*" 
+        onChange={handleVideoUpload} 
+        className="video-upload-input"
+      />
       
       {videos.length === 0 ? (
         <div className="no-videos">No videos found</div>

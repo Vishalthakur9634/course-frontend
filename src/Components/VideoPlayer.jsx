@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import Hls from "hls.js";
 import { Play, Pause, RotateCcw, RotateCw, Maximize, Volume2, VolumeX, Settings, PictureInPicture, Monitor } from "lucide-react";
-import "./VideoPlayer.css";
+import "./VideoPlayer.css"; 
 
 const VideoPlayer = ({ videoData }) => {
   const videoRef = useRef(null), hlsRef = useRef(null), controlsTimeoutRef = useRef(null), containerRef = useRef(null);
@@ -14,7 +14,7 @@ const VideoPlayer = ({ videoData }) => {
     if (!video || !videoData?._id) return;
   
     try {
-      const backendBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+      const backendBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const manifestUrl = `${backendBaseUrl}/api/videos/stream/${videoData._id}/master.m3u8`;
       const verifyManifest = async (url, retries = 2) => {
         for (let i = 0; i < retries; i++) {
