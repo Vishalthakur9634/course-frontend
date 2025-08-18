@@ -4,17 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
-// Dynamic API base URL configuration
-const getApiBaseUrl = () => {
-  // Use window.location to detect environment
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:3000'; // Local development
-  }
-  return 'https://course-backend-cnwc.onrender.com'; // Production
-};
-
 // Set base URL for axios
-const API_BASE_URL = getApiBaseUrl();
+const API_BASE_URL = 'http://localhost:3000';
 axios.defaults.baseURL = API_BASE_URL;
 
 export function AuthProvider({ children }) {
@@ -141,9 +132,7 @@ export function AuthProvider({ children }) {
         logout,
         updateDetails,
         updatePassword,
-        setMessage,
-        apiBaseUrl: API_BASE_URL // Expose if needed
-
+        setMessage
       }}
     >
       {children}

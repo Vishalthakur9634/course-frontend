@@ -9,19 +9,13 @@ const VideoPlayer = ({ videoData }) => {
   const [uiState, setUiState] = useState({ showControls: true, showVolume: false, showSettings: false, showQuality: false });
   const [showPlayPause, setShowPlayPause] = useState(false);
 
-const initPlayer = useCallback(async () => {
+  const initPlayer = useCallback(async () => {
     const video = videoRef.current;
     if (!video || !videoData?._id) return;
   
     try {
-      // Dynamic backend URL detection
-      const backendBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:3000'
-        : 'https://course-backend-cnwc.onrender.com';
-      
-      const manifestUrl = `${backendBaseUrl}/api/videos/stream/${videoData._id}/master.m3u8`;
-      console.log('Loading manifest from:', manifestUrl);
-  
+      const backendBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+const manifestUrl = `${backendBaseUrl}/api/videos/stream/${videoData._id}/master.m3u8`;
       const verifyManifest = async (url, retries = 2) => {
         for (let i = 0; i < retries; i++) {
           try {
